@@ -1,0 +1,387 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Black+Ops+One&family=Alegreya+Sans+SC:wght@500;700;800&display=swap');
+
+:root {
+  --red: #d83a45;
+  --red-deep: #99222c;
+  --cream: #efe5bf;
+  --cream-deep: #e0d3a4;
+  --navy: #131226;
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-heading: 'Black Ops One', sans-serif;
+  --font-body: 'Alegreya Sans SC', sans-serif;
+}
+
+/* ─── Section ─── */
+.about {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(180deg, #f4edc8 0%, var(--cream) 100%);
+  padding: 64px 80px 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: 420px;
+}
+
+/* Subtle parchment grain */
+.about::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='5'%3E%3Ccircle cx='1' cy='1' r='0.45' fill='rgba(107,79,45,0.18)'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, rgba(255,255,255,0.12), rgba(86,53,26,0.05));
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Bottom divider */
+.about::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(72vw, 620px);
+  transform: translateX(-50%);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(139,26,26,0.45) 18%, rgba(139,26,26,0.45) 82%, transparent);
+}
+
+/* ─── Corner scroll ornaments ─── */
+.about__ornament {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  width: 90px;
+  height: 90px;
+}
+.about__ornament--tl { top: 0; left: 0; }
+.about__ornament--tr { top: 0; right: 0; transform: scaleX(-1); }
+
+/* ─── Monitors wrapper ─── */
+.about__monitors {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Single monitor ─── */
+.about__monitor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  filter: drop-shadow(0 12px 28px rgba(32, 20, 18, 0.4));
+}
+.about__monitor:nth-child(2) {
+  margin-bottom: 0;
+}
+
+/* Realistic contact shadow so monitors sit on the surface */
+.about__monitor::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  width: 82%;
+  height: 18px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(24, 14, 12, 0.42) 0%, rgba(24, 14, 12, 0.22) 45%, rgba(24, 14, 12, 0) 78%);
+  filter: blur(1.2px);
+  pointer-events: none;
+}
+
+.about__monitor:nth-child(1)::after {
+  width: 88%;
+  height: 20px;
+  opacity: 0.95;
+}
+
+.about__monitor:nth-child(2)::after {
+  width: 80%;
+  height: 19px;
+  opacity: 0.9;
+}
+
+/* The screen itself */
+.about__screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px 4px 2px 2px;
+  box-shadow:
+    0 0 0 3px #2a1420,
+    0 0 0 7px #7e1e2a,
+    0 0 0 9px #4d0f17,
+    0 0 0 12px #8c2934,
+    0 0 0 14px #2b1622,
+    inset 0 0 54px rgba(0, 0, 0, 0.58);
+  filter: contrast(1.05) saturate(0.86) sepia(0.18);
+}
+.about__monitor:nth-child(1) .about__screen { width: 260px; height: 175px; }
+.about__monitor:nth-child(2) .about__screen { width: 310px; height: 208px; }
+
+/* Sky background inside screen */
+.about__sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #061636 0%, #091c47 54%, #0a2554 100%);
+  z-index: 1;
+}
+
+/* Stars in sky */
+.about__stars {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Screen A: sidebar color blocks ── */
+.about__sidebar {
+  position: absolute;
+  top: 14px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 5;
+}
+.about__sidebar-block {
+  height: 13px;
+  border-radius: 2px;
+  image-rendering: pixelated;
+  /* pixel outline */
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+/* Floating orb / moon */
+.about__moon {
+  position: absolute;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #7ffff0, #00bfa5);
+  box-shadow: 0 0 10px 3px rgba(0,229,200,0.45);
+  top: 20%; right: 20%;
+  z-index: 5;
+}
+
+/* PREVIEW label */
+.about__screen-label {
+  position: absolute;
+  top: 7px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: rgba(176,212,255,0.68);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  z-index: 8;
+  white-space: nowrap;
+}
+
+/* ── Screen B: KEY MODULES grid ── */
+.about__modules {
+  position: absolute;
+  top: 10px; left: 8px; right: 8px;
+  z-index: 5;
+}
+
+.about__poster {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+}
+
+.about__poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.about__poster-badge {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #efe5bf;
+  background: rgba(17, 28, 58, 0.86);
+  border: 1px solid rgba(88, 221, 242, 0.54);
+  border-radius: 999px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+.about__modules-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-pixel);
+  font-size: 5px;
+  color: rgba(180,220,255,0.75);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.about__module-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.about__module-row {
+  display: flex;
+  gap: 4px;
+}
+.about__module-cell {
+  height: 11px;
+  border-radius: 2px;
+  flex: 1;
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+/* ─── Pixel ground + trees (shared) ─── */
+.about__ground {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 4;
+}
+.about__ground svg { display: block; width: 100%; }
+
+/* Pixel scanlines */
+.about__scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 2px,
+    rgba(0,0,0,0.09) 2px, rgba(0,0,0,0.09) 3px
+  );
+  pointer-events: none;
+  z-index: 18;
+}
+
+/* Screen glare */
+.about__glare {
+  position: absolute;
+  top: 6px; left: 6px;
+  width: 50px; height: 24px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 19;
+}
+
+/* ─── Monitor stand ─── */
+.about__stand-neck {
+  width: 14px; height: 20px;
+  background: linear-gradient(180deg, #646078, #3f3b51);
+}
+.about__stand-base {
+  width: 72px; height: 9px;
+  background: linear-gradient(180deg, #666279, #38344a);
+  border-radius: 50%;
+}
+.about__stand-shadow {
+  width: 90px; height: 5px;
+  margin-top: 2px;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.2), transparent 70%);
+  border-radius: 50%;
+}
+
+/* ─── Text block ─── */
+.about__text {
+  flex: 0 0 auto;
+  width: min(560px, 100%);
+  position: relative;
+  z-index: 1;
+}
+
+.about__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 14px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.about__label-line {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+.about__heading {
+  font-family: var(--font-heading);
+  font-size: clamp(40px, 4.6vw, 78px);
+  line-height: 0.94;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  transform: skewX(-2deg);
+}
+.about__heading .line-dark { display: block; color: var(--navy); }
+.about__heading .line-red  { display: block; color: var(--red); text-shadow: 2px 1px 0 rgba(113, 19, 31, 0.2); }
+
+.about__body {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.1vw, 21px);
+  font-weight: 700;
+  color: #2b2633;
+  line-height: 1.45;
+  letter-spacing: 0.025em;
+  max-width: 400px;
+  margin-bottom: 32px;
+}
+
+.about__cta {
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--red);
+  border: 2px solid var(--red-deep);
+  border-radius: 4px;
+  padding: 16px 36px;
+  cursor: pointer;
+  position: relative;
+  box-shadow:
+    inset 0 -3px 0 rgba(107, 16, 28, 0.5),
+    0 8px 20px rgba(168, 35, 52, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 960px) {
+  .about { padding: 50px 36px; gap: 40px; }
+  .about__monitor:nth-child(1) .about__screen { width: 210px; height: 141px; }
+  .about__monitor:nth-child(2) .about__screen { width: 250px; height: 168px; }
+}
+@media (max-width: 680px) {
+  .about { flex-direction: column; padding: 44px 20px; text-align: center; }
+  .about__label { justify-content: center; }
+  .about__body  { margin-inline: auto; font-size: 20px; }
+  .about__heading { font-size: clamp(34px, 10vw, 52px); }
+  .about__cta { font-size: 11px; }
+  .about__monitor:nth-child(1) .about__screen { width: 165px; height: 111px; }
+  .about__monitor:nth-child(2) .about__screen { width: 196px; height: 132px; }
+}

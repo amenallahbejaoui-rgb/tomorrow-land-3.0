@@ -1,0 +1,230 @@
+.concept {
+	position: relative;
+	width: 100%;
+	padding: 62px 28px 84px;
+	background: linear-gradient(180deg, #f4edc8 0%, #efe5bf 100%);
+	box-sizing: border-box;
+}
+
+.concept::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='5'%3E%3Ccircle cx='1' cy='1' r='0.45' fill='rgba(107,79,45,0.16)'/%3E%3C/svg%3E");
+	pointer-events: none;
+}
+
+.concept__ornament {
+	position: absolute;
+	width: 90px;
+	height: 90px;
+	z-index: 2;
+	pointer-events: none;
+}
+
+.concept__ornament--bl {
+	left: 0;
+	bottom: 0;
+	transform: scaleY(-1);
+	transform-origin: center;
+}
+
+.concept__ornament--br {
+	right: 0;
+	bottom: 0;
+	transform: scale(-1, -1);
+	transform-origin: center;
+}
+
+.concept__inner {
+	position: relative;
+	z-index: 1;
+	width: min(1520px, 100%);
+	margin: 0 auto;
+}
+
+.concept__title {
+	margin: 0 0 58px;
+	font-family: 'Black Ops One', sans-serif;
+	font-size: clamp(40px, 4.2vw, 72px);
+	line-height: 0.92;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: #1d1632;
+	max-width: 760px;
+	transform: skewX(-2deg);
+}
+
+.concept__title span {
+	display: block;
+}
+
+.concept__grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(210px, 1fr));
+	gap: 28px;
+}
+
+.concept__card {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.concept__card-copy {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	min-width: 0;
+}
+
+.concept__thumb {
+	height: clamp(190px, 15vw, 240px);
+	border-radius: 12px;
+	border: 2px solid #8c2e3a;
+	box-shadow:
+		0 0 0 3px #27132e,
+		0 10px 18px rgba(34, 16, 20, 0.22),
+		inset 0 0 26px rgba(0, 0, 0, 0.35);
+	margin-bottom: 30px;
+	position: relative;
+	overflow: hidden;
+	background-color: #1a2048;
+}
+
+.concept__thumb--photo {
+	/* Portrait frame: more vertical room so figures read larger than a short 16:9 crop */
+	height: auto;
+	aspect-ratio: 3 / 4;
+	/* Warm neutral while the photo decodes (avoids a random “blue tile” flash from #1a2048) */
+	background-color: #ded3b0;
+	background-image: linear-gradient(180deg, #ebe2c4 0%, #dfd4b2 100%);
+	/* Override inset vignette from .concept__thumb so portraits stay clear */
+	box-shadow:
+		0 0 0 3px #27132e,
+		0 10px 18px rgba(34, 16, 20, 0.22);
+}
+
+.concept__thumb--photo::before {
+	display: none;
+}
+
+.concept__thumb--photo .concept__thumb-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	object-position: center 36%;
+	transform: scale(1.04);
+	transform-origin: center 38%;
+	opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.concept__thumb--photo .concept__thumb-img {
+		opacity: 1;
+	}
+}
+
+.concept__thumb::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04) 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 3px);
+	pointer-events: none;
+}
+
+.concept__thumb--a {
+	background:
+		radial-gradient(circle at 52% 42%, #f4ddb8 0 16%, transparent 17%),
+		radial-gradient(ellipse at 52% 73%, #ececec 0 28%, transparent 29%),
+		radial-gradient(circle at 52% 46%, #c7d9f0 0 38%, transparent 39%),
+		linear-gradient(160deg, #9fd0ec, #83bddf 52%, #6da6c8 100%);
+}
+
+.concept__thumb--b {
+	background:
+		radial-gradient(circle at 50% 38%, #f2c8ad 0 15%, transparent 16%),
+		radial-gradient(ellipse at 50% 74%, #4f8c73 0 30%, transparent 31%),
+		radial-gradient(circle at 50% 42%, #42c88e 0 38%, transparent 39%),
+		linear-gradient(180deg, #9fd0e4 0%, #86bed8 56%, #77afcc 100%);
+}
+
+.concept__thumb--c {
+	background:
+		radial-gradient(circle at 50% 40%, #f2c49c 0 15%, transparent 16%),
+		radial-gradient(ellipse at 50% 76%, #ef9c3c 0 31%, transparent 32%),
+		radial-gradient(circle at 50% 44%, #f3d198 0 35%, transparent 36%),
+		linear-gradient(180deg, #a6d7ec 0%, #8dc6df 58%, #77b1cb 100%);
+}
+
+.concept__thumb--d {
+	background:
+		radial-gradient(circle at 50% 40%, #f0d0b5 0 15%, transparent 16%),
+		radial-gradient(ellipse at 50% 76%, #495b8f 0 30%, transparent 31%),
+		radial-gradient(circle at 50% 44%, #d2a782 0 35%, transparent 36%),
+		linear-gradient(180deg, #a9d8ed 0%, #91c6e1 60%, #7bb2cf 100%);
+	border-color: #8f453d;
+}
+
+.concept__thumb--d::after {
+	content: '';
+	position: absolute;
+	inset: 6px;
+	border-radius: 10px;
+	box-shadow: inset 0 0 0 4px #e7d8c6, inset 0 0 0 8px #7c3f3f;
+	pointer-events: none;
+}
+
+.concept__card-title {
+	margin: 0 0 16px;
+	font-family: 'Black Ops One', sans-serif;
+	font-size: clamp(22px, 1.55vw, 32px);
+	line-height: 0.95;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: #c25556;
+	transform: skewX(-2deg);
+}
+
+.concept__card-body {
+	margin: 0 0 16px;
+	font-family: 'Alegreya Sans SC', sans-serif;
+	font-size: clamp(16px, 0.96vw, 20px);
+	line-height: 1.32;
+	font-weight: 700;
+	color: #2a2532;
+	max-width: 32ch;
+	flex-grow: 1;
+}
+
+.concept__card-role {
+	margin: 0 0 12px;
+	font-family: 'Press Start 2P', monospace;
+	font-size: 10px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #8c2e3a;
+}
+
+@media (max-width: 1220px) {
+	.concept__grid {
+		grid-template-columns: repeat(2, minmax(240px, 1fr));
+	}
+}
+
+@media (max-width: 760px) {
+	.concept {
+		padding: 48px 16px 58px;
+	}
+
+	.concept__title {
+		font-size: clamp(34px, 11vw, 54px);
+		margin-bottom: 34px;
+	}
+
+	.concept__grid {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+}

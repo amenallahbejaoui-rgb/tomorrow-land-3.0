@@ -1,0 +1,260 @@
+.ambassadors {
+  width: 100%;
+  background: linear-gradient(50deg, #0a0e27 0%, #1a1f3a 100%);
+  padding: 120px 20px;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.ambassadors::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(0, 255, 200, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ambassadors::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, white, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 60px 70px, white, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 50px 50px, white, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 10px, white, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 10px 90px, white, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 80px, white, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 130px, white, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 70px 140px, white, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: twinkle 3s infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.ambassadors__container {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.ambassadors__header {
+  position: relative;
+  margin-bottom: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.ambassadors__title {
+  font-family: 'Black Ops One', sans-serif;
+  font-size: clamp(36px, 5.2vw, 72px);
+  line-height: 0.92;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0;
+  max-width: 600px;
+  text-shadow: 0 0 24px rgba(124, 246, 235, 0.28);
+}
+
+.ambassadors__team-label {
+  font-size: 1.5rem;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+.ambassadors__hint {
+  color: rgba(214, 251, 246, 0.9);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.ambassadors__slider {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 4px 30px;
+  scroll-snap-type: x mandatory;
+  cursor: grab;
+  user-select: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.ambassadors__slider::-webkit-scrollbar {
+  display: none;
+}
+
+.ambassadors__slider.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+.ambassador-card {
+  flex: 0 0 clamp(300px, 36vw, 390px);
+  scroll-snap-align: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.35s ease, filter 0.35s ease;
+  position: relative;
+  padding: 10px 10px 12px;
+  background: #111827;
+  border-radius: 8px;
+  border: 2px solid rgba(0, 255, 200, 0.3);
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.2), 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.ambassador-card::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.ambassador-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(0, 255, 200, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.ambassador-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  filter: brightness(1.06);
+}
+
+.ambassador-card__image-wrapper {
+  position: relative;
+  margin: 10px 0 14px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 40%, #1a2154 0%, #0a0e27 72%);
+  box-shadow: 0 10px 30px rgba(0, 255, 200, 0.12);
+  border: 1px solid rgba(0, 255, 200, 0.2);
+}
+
+.ambassador-card__image-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 25%, rgba(5, 8, 24, 0.35) 100%);
+  pointer-events: none;
+}
+
+.ambassador-card__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.ambassador-card:hover .ambassador-card__image {
+  transform: scale(1.015);
+}
+
+.ambassador-card__info {
+  padding: 0 8px 2px;
+}
+
+.ambassador-card__name {
+  font-size: clamp(1.3rem, 2.3vw, 1.9rem);
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.06em;
+}
+
+.ambassador-card__status {
+  display: inline-block;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f2f6ff;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(124, 246, 235, 0.25);
+  margin-top: 4px;
+  max-width: 100%;
+  line-height: 1.5;
+}
+
+@media (max-width: 1024px) {
+  .ambassadors__title {
+    font-size: clamp(30px, 6vw, 54px);
+  }
+
+  .ambassadors__slider {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ambassadors {
+    padding: 72px 20px;
+  }
+
+  .ambassadors__header {
+    flex-direction: column;
+    margin-bottom: 50px;
+  }
+
+  .ambassadors__title {
+    font-size: clamp(28px, 9vw, 40px);
+    margin-bottom: 20px;
+  }
+
+  .ambassadors__team-label {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 1rem;
+    opacity: 0.5;
+  }
+
+  .ambassadors__slider {
+    gap: 16px;
+    padding-bottom: 20px;
+  }
+
+  .ambassador-card {
+    flex-basis: min(84vw, 360px);
+  }
+
+  .ambassador-card__name {
+    font-size: 1.2rem;
+  }
+
+}

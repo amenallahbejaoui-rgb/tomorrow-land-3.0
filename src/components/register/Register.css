@@ -1,0 +1,81 @@
+.register {
+	position: relative;
+	width: 100%;
+	min-height: 360px;
+	display: grid;
+	place-items: center;
+	padding: 56px 18px;
+	box-sizing: border-box;
+	overflow: hidden;
+	background:
+		radial-gradient(circle at 18% 22%, rgba(100, 245, 220, 0.16) 0%, transparent 32%),
+		radial-gradient(circle at 82% 78%, rgba(255, 94, 142, 0.16) 0%, transparent 34%),
+		linear-gradient(160deg, #090f25 0%, #0f1a3d 52%, #0b1532 100%);
+}
+
+.register::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(rgba(126, 164, 255, 0.1) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(126, 164, 255, 0.1) 1px, transparent 1px);
+	background-size: 34px 34px;
+	pointer-events: none;
+}
+
+.register__noise {
+	position: absolute;
+	inset: 0;
+	background-image: radial-gradient(rgba(255, 255, 255, 0.08) 0.6px, transparent 0.6px);
+	background-size: 6px 6px;
+	opacity: 0.25;
+	pointer-events: none;
+}
+
+.register__button {
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	border: 0;
+	padding: 18px 34px;
+	font-family: 'Black Ops One', sans-serif;
+	font-size: clamp(24px, 3.1vw, 38px);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #0d142f;
+	cursor: pointer;
+	clip-path: polygon(0 16%, 12% 0, 100% 0, 100% 84%, 88% 100%, 0 100%);
+	background: linear-gradient(180deg, #79ffea 0%, #49dbca 48%, #2cb8a8 100%);
+	box-shadow:
+		0 0 0 2px rgba(255, 108, 156, 0.4),
+		0 14px 24px rgba(4, 9, 24, 0.55),
+		inset 0 -4px 0 rgba(0, 0, 0, 0.22);
+	transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.register__button:hover {
+	transform: translateY(-3px) scale(1.02);
+	filter: brightness(1.05);
+	box-shadow:
+		0 0 0 2px rgba(255, 108, 156, 0.56),
+		0 18px 28px rgba(4, 9, 24, 0.62),
+		inset 0 -4px 0 rgba(0, 0, 0, 0.22);
+}
+
+.register__button:active {
+	transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+	.register {
+		min-height: 290px;
+		padding: 38px 14px;
+	}
+
+	.register__button {
+		padding: 14px 22px;
+		letter-spacing: 0.04em;
+	}
+}

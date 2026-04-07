@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Black+Ops+One&family=Alegreya+Sans+SC:wght@500;700;800&display=swap');
+
+.planning {
+	position: relative;
+	width: 100%;
+	background: linear-gradient(180deg, #efe5bf 0%, #f4edc8 100%);
+	padding: 62px 20px 74px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.planning::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='5'%3E%3Ccircle cx='1' cy='1' r='0.45' fill='rgba(107,79,45,0.16)'/%3E%3C/svg%3E");
+	pointer-events: none;
+}
+
+.planning::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: min(72vw, 620px);
+	transform: translateX(-50%);
+	height: 2px;
+	background: linear-gradient(90deg, transparent, rgba(139, 26, 26, 0.42) 18%, rgba(139, 26, 26, 0.42) 82%, transparent);
+}
+
+.planning__ornament {
+	position: absolute;
+	width: 90px;
+	height: 90px;
+	z-index: 2;
+	pointer-events: none;
+}
+
+.planning__ornament--tl {
+	top: 0;
+	left: 0;
+}
+
+.planning__ornament--tr {
+	top: 0;
+	right: 0;
+	transform: scaleX(-1);
+}
+
+.planning__inner {
+	position: relative;
+	z-index: 1;
+	width: min(1240px, 100%);
+	margin: 0 auto;
+	display: grid;
+	place-items: center;
+}
+
+.planning__board {
+	position: relative;
+	width: 100%;
+	background: #131f49;
+	border: 2px solid #7f8ba3;
+	border-radius: 28px;
+	padding: 22px 22px 20px;
+	box-shadow:
+		0 16px 36px rgba(30, 21, 18, 0.22),
+		inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.planning__board-header {
+	text-align: center;
+	margin-bottom: 18px;
+}
+
+.planning__label {
+	margin: 0;
+	font-family: 'Press Start 2P', monospace;
+	font-size: 8px;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #f4a26e;
+	opacity: 0.9;
+}
+
+.planning__title {
+	margin: 10px 0 0;
+	font-family: 'Black Ops One', sans-serif;
+	font-size: clamp(34px, 4vw, 56px);
+	line-height: 0.96;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: #f2e8cb;
+	transform: skewX(-2deg);
+}
+
+.planning__meta {
+	margin: 12px 0 0;
+	font-family: 'Alegreya Sans SC', sans-serif;
+	font-size: clamp(16px, 1.2vw, 21px);
+	font-weight: 700;
+	color: #d2d9ee;
+}
+
+.planning__maps {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	column-gap: 84px;
+	row-gap: 18px;
+}
+
+.planning__map {
+	position: relative;
+	isolation: isolate;
+	border-radius: 20px;
+	padding: 14px 12px 12px;
+	overflow: visible;
+	background:
+		radial-gradient(circle at 10% 22%, rgba(255, 178, 118, 0.36) 0 2px, transparent 3px),
+		radial-gradient(circle at 78% 30%, rgba(255, 178, 118, 0.36) 0 2px, transparent 3px),
+		radial-gradient(circle at 24% 72%, rgba(255, 178, 118, 0.32) 0 2px, transparent 3px),
+		radial-gradient(circle at 88% 80%, rgba(255, 178, 118, 0.32) 0 2px, transparent 3px),
+		linear-gradient(180deg, #1a2858 0%, #141f46 100%);
+	background-size: 140px 140px, 160px 160px, 150px 150px, 170px 170px, 100% 100%;
+	border: 1px solid rgba(164, 181, 211, 0.45);
+}
+
+.planning__map-header {
+	text-align: center;
+	padding: 4px 0 10px;
+	border-bottom: 1px solid rgba(203, 217, 244, 0.24);
+	margin-bottom: 10px;
+}
+
+.planning__map-header h3 {
+	margin: 0;
+	font-family: 'Black Ops One', sans-serif;
+	font-size: clamp(26px, 2.2vw, 36px);
+	line-height: 0.95;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: #f2e8cb;
+}
+
+.planning__map-header p {
+	margin: 7px 0 0;
+	font-family: 'Press Start 2P', monospace;
+	font-size: 8px;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: #f0a067;
+}
+
+.planning__map-road {
+	position: relative;
+	overflow: visible;
+	border-radius: 14px;
+	padding: 10px 18px 12px;
+}
+
+.planning__map-road--long {
+	min-height: 1780px;
+}
+
+.planning__map-road--short {
+	min-height: 860px;
+}
+
+.planning__route {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.planning__route-svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.planning__route-path {
+	fill: none;
+	stroke: #ffffff;
+	stroke-width: 9;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	opacity: 0.9;
+}
+
+.planning__route-dash {
+	fill: none;
+	stroke: #000000;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-dasharray: 2.2 5;
+}
+
+.planning__stop {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+}
+
+.planning__node {
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background: #1b244a;
+	border: 2px solid #f0a067;
+	box-shadow: 0 0 0 3px rgba(240, 160, 103, 0.25);
+	position: relative;
+	z-index: 1;
+	display: grid;
+	place-items: center;
+}
+
+.planning__node span {
+	font-family: 'Press Start 2P', monospace;
+	font-size: 9px;
+	color: #f2d9b8;
+}
+
+.planning__stop-content {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: min(220px, 30vw);
+	padding: 8px 10px;
+	background: rgba(17, 30, 66, 0.88);
+	border: 1px solid rgba(154, 171, 203, 0.36);
+	border-radius: 10px;
+	backdrop-filter: blur(1px);
+}
+
+.planning__stop--left .planning__stop-content {
+	right: calc(100% + 8px);
+	text-align: right;
+}
+
+.planning__stop--right .planning__stop-content {
+	left: calc(100% + 8px);
+	text-align: left;
+}
+
+.planning__time {
+	margin: 0 0 5px;
+	display: inline-block;
+	padding: 3px 6px;
+	border-radius: 999px;
+	border: 1px solid rgba(240, 160, 103, 0.3);
+	background: rgba(17, 30, 66, 0.75);
+	font-family: 'Press Start 2P', monospace;
+	font-size: 8px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #f0a067;
+}
+
+.planning__stop-content h4 {
+	margin: 0 0 6px;
+	font-family: 'Alegreya Sans SC', sans-serif;
+	font-size: 18px;
+	line-height: 1.05;
+	font-weight: 800;
+	color: #f0efe8;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.planning__stop-content p {
+	margin: 0;
+	font-family: 'Alegreya Sans SC', sans-serif;
+	font-size: 13px;
+	line-height: 1.3;
+	color: rgba(227, 233, 248, 0.86);
+}
+
+@media (max-width: 1100px) {
+	.planning {
+		padding: 52px 14px 62px;
+	}
+
+	.planning__maps {
+		grid-template-columns: 1fr;
+		column-gap: 0;
+	}
+
+	.planning__map-road--long {
+		min-height: 1450px;
+	}
+
+	.planning__map-road--short {
+		min-height: 820px;
+	}
+}
+
+@media (max-width: 520px) {
+	.planning__board {
+		padding: 12px;
+		border-radius: 20px;
+	}
+
+	.planning__title {
+		font-size: clamp(28px, 8vw, 40px);
+	}
+
+	.planning__map {
+		padding: 10px 8px;
+	}
+
+	.planning__map-road {
+		padding: 8px 10px 10px;
+	}
+
+	.planning__map-road--long {
+		min-height: 1200px;
+	}
+
+	.planning__map-road--short {
+		min-height: 760px;
+	}
+
+	.planning__node {
+		width: 28px;
+		height: 28px;
+	}
+
+	.planning__node span {
+		font-size: 7px;
+	}
+
+	.planning__stop-content {
+		width: min(180px, 44vw);
+		padding: 6px 7px;
+	}
+
+	.planning__time {
+		font-size: 7px;
+		padding: 2px 5px;
+	}
+
+	.planning__stop-content h4 {
+		font-size: 13px;
+		margin-bottom: 4px;
+	}
+
+	.planning__stop-content p {
+		font-size: 11px;
+	}
+}
