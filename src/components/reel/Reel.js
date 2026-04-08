@@ -6,7 +6,6 @@ import reelVideo from './0402.mp4';
 export default function Reel() {
     const sectionRef = useRef(null);
     const videoRef = useRef(null);
-    const pendingAutoPlayRef = useRef(false);
     const [hasAutoStarted, setHasAutoStarted] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
@@ -23,31 +22,18 @@ export default function Reel() {
         const section = sectionRef.current;
         if (!section || hasAutoStarted) return;
 
-        const tryAutoPlay = () => {
-            if (!videoRef.current || hasAutoStarted) return;
-            pendingAutoPlayRef.current = true;
-
-            videoRef.current.play().then(() => {
-                setIsPlaying(true);
-                setHasAutoStarted(true);
-                pendingAutoPlayRef.current = false;
-            }).catch(() => {
-                // Some browsers block autoplay; manual play button remains available.
-            });
-        };
-
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (!entry.isIntersecting || hasAutoStarted || !videoRef.current) return;
 
-                // Start fetching before the reel is fully on screen to avoid empty frame flashes.
-                videoRef.current.load();
-                tryAutoPlay();
+                videoRef.current.play().then(() => {
+                    setIsPlaying(true);
+                    setHasAutoStarted(true);
+                }).catch(() => {
+                    // Some browsers block autoplay; manual play button remains available.
+                });
             },
-            {
-                threshold: 0.01,
-                rootMargin: '900px 0px',
-            }
+            { threshold: 0.55 }
         );
 
         observer.observe(section);
@@ -107,21 +93,9 @@ export default function Reel() {
                     loop
                     muted={isMuted}
                     playsInline
-                    preload="auto"
-                    poster="/tm.jpg"
+                    preload="metadata"
                     onPause={() => setIsPlaying(false)}
                     onPlay={() => setIsPlaying(true)}
-                    onLoadedData={() => {
-                        if (!pendingAutoPlayRef.current || hasAutoStarted || !videoRef.current) return;
-
-                        videoRef.current.play().then(() => {
-                            setIsPlaying(true);
-                            setHasAutoStarted(true);
-                            pendingAutoPlayRef.current = false;
-                        }).catch(() => {
-                            // If blocked, user can still press play manually.
-                        });
-                    }}
                 >
                     <source src={reelVideo} type="video/mp4" />
                     Your browser does not support the video tag.
