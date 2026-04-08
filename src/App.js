@@ -7,12 +7,25 @@ import Navbar from "./components/navbar/Navbar";
 import OurProgram from "./components/ourprogram/OurProgram";
 import Footer from "./components/footer/Footer";
 import AboutTommorowland from "./components/abouttommorowland/abouttommorowland";
-import Reel from "./components/reel/Reel";
 import Ambassadors from "./components/ambassadors/Ambassadors";
 import Planning from "./components/planning/Planning";
 import Speakers from "./components/speakers/Speakers";
 
+const Reel = lazy(() => import("./components/reel/Reel"));
 const Concept = lazy(() => import("./components/concept/Concept"));
+
+function SectionFallback({ minHeight }) {
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        minHeight,
+        width: "100%",
+        background: "linear-gradient(180deg, #111827 0%, #1a1f3a 100%)",
+      }}
+    />
+  );
+}
 
 export default function App() {
   useEffect(() => {
@@ -41,12 +54,14 @@ export default function App() {
       <Navbar />
       <Home />
       <AboutTommorowland />
-      <Reel />
+      <Suspense fallback={<SectionFallback minHeight={560} />}>
+        <Reel />
+      </Suspense>
       <Ambassadors />
       <Planning />
       <About />
       <Speakers />
-      <Suspense fallback={null}>
+      <Suspense fallback={<SectionFallback minHeight={1500} />}>
         <Concept />
       </Suspense>
       <OurProgram />

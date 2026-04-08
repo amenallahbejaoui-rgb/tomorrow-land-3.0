@@ -69,6 +69,8 @@
 	min-width: 0;
 	display: flex;
 	flex-direction: column;
+	content-visibility: auto;
+	contain-intrinsic-size: 520px 760px;
 }
 
 .concept__card-copy {
@@ -117,12 +119,34 @@
 	object-position: center 36%;
 	transform: scale(1.04);
 	transform-origin: center 38%;
-	opacity: 1;
+	opacity: 0;
+	transition: opacity 220ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
 	.concept__thumb--photo .concept__thumb-img {
 		opacity: 1;
+	}
+}
+
+.concept__thumb--loaded .concept__thumb-img {
+	opacity: 1;
+}
+
+.concept__thumb--loading::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.16) 40%, transparent 80%);
+	transform: translateX(-100%);
+	animation: conceptShimmer 1.4s infinite;
+	pointer-events: none;
+	mix-blend-mode: screen;
+}
+
+@keyframes conceptShimmer {
+	100% {
+		transform: translateX(100%);
 	}
 }
 

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect, useLayoutEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AOS from 'aos';
 import './Concept.css';
 
@@ -14,77 +14,75 @@ import photoExternalRelations from './external_relation_manager.jpg';
 import photoAmbassadorCoordinator from './ambassador_coordinator .jpg';
 import photoMediaManager from './Media_Manager.jpeg';
 
-function useDebouncedAosRefresh() {
-	const timeoutRef = useRef(null);
+function useIntersectionLoad(rootMargin = '700px 0px') {
+	const ref = useRef(null);
+	const [shouldLoad, setShouldLoad] = useState(false);
 
-	const scheduleRefresh = useCallback(() => {
-		if (timeoutRef.current) {
-			clearTimeout(timeoutRef.current);
+	useEffect(() => {
+		const element = ref.current;
+		if (!element || shouldLoad) {
+			return;
 		}
-		timeoutRef.current = setTimeout(() => {
-			AOS.refresh();
-			timeoutRef.current = null;
-		}, 100);
-	}, []);
 
-	useEffect(
-		() => () => {
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current);
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					setShouldLoad(true);
+					observer.disconnect();
+				}
+			},
+			{
+				rootMargin,
+				threshold: 0.01,
 			}
-		},
-		[]
-	);
+		);
 
-	return scheduleRefresh;
+		observer.observe(element);
+
+		return () => observer.disconnect();
+	}, [rootMargin, shouldLoad]);
+
+	return [ref, shouldLoad];
 }
 
-function ConceptTeamThumb({ card, index, onLayoutChange }) {
-	const imgRef = useRef(null);
+function ConceptTeamThumb({ card, index }) {
+	const [thumbRef, shouldLoad] = useIntersectionLoad(index < 4 ? '900px 0px' : '650px 0px');
 	const [failed, setFailed] = useState(false);
+	const [loaded, setLoaded] = useState(false);
 	const fallbackVariant = card.variant || 'd';
-
-	useLayoutEffect(() => {
-		const el = imgRef.current;
-		if (el && el.complete && el.naturalHeight > 0) {
-			onLayoutChange();
-		}
-	}, [card.photo, onLayoutChange]);
 
 	if (!card.photo || failed) {
 		return (
 			<div
+				ref={thumbRef}
 				className={`concept__thumb concept__thumb--${fallbackVariant}`}
 				aria-hidden={!card.photo}
 			/>
 		);
 	}
 
-	const handleLoad = () => {
-		onLayoutChange();
-	};
-
 	const handleError = () => {
 		setFailed(true);
-		onLayoutChange();
+		setLoaded(false);
 	};
 
-	/* First row: load sooner. Rest: lazy so the page stays responsive. */
-	const eager = index < 4;
-
 	return (
-		<div className="concept__thumb concept__thumb--photo">
-			<img
-				ref={imgRef}
-				src={card.photo}
-				alt=""
-				className="concept__thumb-img"
-				loading={eager ? 'eager' : 'lazy'}
-				decoding="async"
-				fetchPriority={index === 0 ? 'high' : 'auto'}
-				onLoad={handleLoad}
-				onError={handleError}
-			/>
+		<div
+			ref={thumbRef}
+			className={`concept__thumb concept__thumb--photo concept__thumb--${fallbackVariant} ${loaded ? 'concept__thumb--loaded' : 'concept__thumb--loading'}`}
+		>
+			{shouldLoad && (
+				<img
+					src={card.photo}
+					alt=""
+					className={`concept__thumb-img ${loaded ? 'concept__thumb-img--loaded' : 'concept__thumb-img--loading'}`}
+					decoding="async"
+					loading="eager"
+					fetchPriority={index < 4 ? 'high' : 'low'}
+					onLoad={() => setLoaded(true)}
+					onError={handleError}
+				/>
+			)}
 		</div>
 	);
 }
@@ -177,11 +175,9 @@ const cards = [
 ];
 
 export default function Concept() {
-	const scheduleAosRefresh = useDebouncedAosRefresh();
-
 	useEffect(() => {
 		const id = requestAnimationFrame(() => {
-			AOS.refresh();
+			AOS.refreshHard();
 		});
 		return () => cancelAnimationFrame(id);
 	}, []);
@@ -204,8 +200,7 @@ export default function Concept() {
 				<div className="concept__grid">
 					{cards.map((card, index) => (
 						<article className="concept__card" key={card.name}>
-							<ConceptTeamThumb card={card} index={index} onLayoutChange={scheduleAosRefresh} />
-							{/* AOS only on text — photos are not tied to scroll animation (fixes “blank until reload” when decode is slow). */}
+							<ConceptTeamThumb card={card} index={index} />
 							<div
 								className="concept__card-copy"
 								data-aos="fade"
