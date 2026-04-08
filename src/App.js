@@ -12,7 +12,6 @@ import Planning from "./components/planning/Planning";
 import Speakers from "./components/speakers/Speakers";
 import Reel from "./components/reel/Reel";
 import Concept from "./components/concept/Concept";
-import Register from "./components/register/Register";
 
 export default function App() {
   useEffect(() => {
