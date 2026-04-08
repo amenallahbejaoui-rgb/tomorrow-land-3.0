@@ -4,7 +4,9 @@ import './Reel.css';
 import reelVideo from './0402.mp4';
 
 export default function Reel() {
+    const sectionRef = useRef(null);
     const videoRef = useRef(null);
+    const [hasAutoStarted, setHasAutoStarted] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
     const [volume, setVolume] = useState(0.5);
@@ -15,6 +17,29 @@ export default function Reel() {
             videoRef.current.muted = isMuted;
         }
     }, [volume, isMuted]);
+
+    useEffect(() => {
+        const section = sectionRef.current;
+        if (!section || hasAutoStarted) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (!entry.isIntersecting || hasAutoStarted || !videoRef.current) return;
+
+                videoRef.current.play().then(() => {
+                    setIsPlaying(true);
+                    setHasAutoStarted(true);
+                }).catch(() => {
+                    // Some browsers block autoplay; manual play button remains available.
+                });
+            },
+            { threshold: 0.55 }
+        );
+
+        observer.observe(section);
+
+        return () => observer.disconnect();
+    }, [hasAutoStarted]);
 
     const handlePlayToggle = () => {
         if (!videoRef.current) return;
@@ -53,15 +78,15 @@ export default function Reel() {
     };
 
     return (
-        <section className="reel" id="reel">
-            <div className="reel__side-title reel__side-title--left" data-aos="fade-right" data-aos-delay="40">
+        <section className="reel" id="reel" ref={sectionRef}>
+            <div className="reel__side-title reel__side-title--left">
                 Check Out
             </div>
-            <div className="reel__side-title reel__side-title--right" data-aos="fade-left" data-aos-delay="80">
+            <div className="reel__side-title reel__side-title--right">
                 Our Reel!
             </div>
 
-            <div className="reel__inner" data-aos="fade-up" data-aos-delay="80">
+            <div className="reel__inner">
                 <video
                     ref={videoRef}
                     className="reel__video"
@@ -76,7 +101,7 @@ export default function Reel() {
                     Your browser does not support the video tag.
                 </video>
                 
-                <div className="reel__controls" data-aos="fade-up" data-aos-delay="180">
+                <div className="reel__controls">
                     <button className="reel__play-btn" onClick={handlePlayToggle} title={isPlaying ? 'Pause' : 'Play'}>
                         {isPlaying ? '⏸' : '▶'}
                     </button>
