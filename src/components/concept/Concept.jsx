@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import './Concept.css';
 
@@ -14,39 +14,7 @@ import photoExternalRelations from './external_relation_manager.jpg';
 import photoAmbassadorCoordinator from './ambassador_coordinator .jpg';
 import photoMediaManager from './Media_Manager.jpeg';
 
-function useIntersectionLoad(rootMargin = '700px 0px') {
-	const ref = useRef(null);
-	const [shouldLoad, setShouldLoad] = useState(false);
-
-	useEffect(() => {
-		const element = ref.current;
-		if (!element || shouldLoad) {
-			return;
-		}
-
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				if (entry.isIntersecting) {
-					setShouldLoad(true);
-					observer.disconnect();
-				}
-			},
-			{
-				rootMargin,
-				threshold: 0.01,
-			}
-		);
-
-		observer.observe(element);
-
-		return () => observer.disconnect();
-	}, [rootMargin, shouldLoad]);
-
-	return [ref, shouldLoad];
-}
-
 function ConceptTeamThumb({ card, index }) {
-	const [thumbRef, shouldLoad] = useIntersectionLoad(index < 4 ? '900px 0px' : '650px 0px');
 	const [failed, setFailed] = useState(false);
 	const [loaded, setLoaded] = useState(false);
 	const fallbackVariant = card.variant || 'd';
@@ -54,7 +22,6 @@ function ConceptTeamThumb({ card, index }) {
 	if (!card.photo || failed) {
 		return (
 			<div
-				ref={thumbRef}
 				className={`concept__thumb concept__thumb--${fallbackVariant}`}
 				aria-hidden={!card.photo}
 			/>
@@ -68,21 +35,18 @@ function ConceptTeamThumb({ card, index }) {
 
 	return (
 		<div
-			ref={thumbRef}
 			className={`concept__thumb concept__thumb--photo concept__thumb--${fallbackVariant} ${loaded ? 'concept__thumb--loaded' : 'concept__thumb--loading'}`}
 		>
-			{shouldLoad && (
-				<img
-					src={card.photo}
-					alt=""
-					className={`concept__thumb-img ${loaded ? 'concept__thumb-img--loaded' : 'concept__thumb-img--loading'}`}
-					decoding="async"
-					loading="eager"
-					fetchPriority={index < 4 ? 'high' : 'low'}
-					onLoad={() => setLoaded(true)}
-					onError={handleError}
-				/>
-			)}
+			<img
+				src={card.photo}
+				alt=""
+				className={`concept__thumb-img ${loaded ? 'concept__thumb-img--loaded' : 'concept__thumb-img--loading'}`}
+				decoding="async"
+				loading={index < 4 ? 'eager' : 'lazy'}
+				fetchPriority={index < 2 ? 'high' : 'auto'}
+				onLoad={() => setLoaded(true)}
+				onError={handleError}
+			/>
 		</div>
 	);
 }

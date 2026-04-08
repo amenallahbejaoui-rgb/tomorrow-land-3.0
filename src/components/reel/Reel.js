@@ -4,48 +4,33 @@ import './Reel.css';
 import reelVideo from './0402.mp4';
 
 export default function Reel() {
-    const sectionRef = useRef(null);
     const videoRef = useRef(null);
-    const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-    const [isVideoReady, setIsVideoReady] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
     const [volume, setVolume] = useState(0.5);
 
     useEffect(() => {
-        const element = sectionRef.current;
-        if (!element) {
+        if (videoRef.current) {
+            videoRef.current.volume = volume;
+            videoRef.current.muted = isMuted;
+        }
+    }, [volume, isMuted]);
+
+    const handlePlayToggle = () => {
+        if (!videoRef.current) return;
+
+        if (isPlaying) {
+            videoRef.current.pause();
+            setIsPlaying(false);
             return;
         }
 
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setShouldLoadVideo(true);
-                    observer.disconnect();
-                }
-            },
-            {
-                rootMargin: '300px 0px',
-                threshold: 0.15,
-            }
-        );
-
-        observer.observe(element);
-
-        return () => {
-            observer.disconnect();
-        };
-    }, []);
-
-    useEffect(() => {
-        if (videoRef.current && shouldLoadVideo) {
-            videoRef.current.volume = volume;
-            videoRef.current.muted = isMuted;
-            videoRef.current.play().catch(err => {
-                console.log('Video autoplay blocked:', err);
-            });
-        }
-    }, [shouldLoadVideo, volume, isMuted]);
+        videoRef.current.play().then(() => {
+            setIsPlaying(true);
+        }).catch(err => {
+            console.log('Video playback blocked:', err);
+        });
+    };
 
     const handleVolumeToggle = () => {
         if (videoRef.current) {
@@ -68,7 +53,7 @@ export default function Reel() {
     };
 
     return (
-        <section className="reel" id="reel" ref={sectionRef}>
+        <section className="reel" id="reel">
             <div className="reel__side-title reel__side-title--left" data-aos="fade-right" data-aos-delay="40">
                 Check Out
             </div>
@@ -77,30 +62,24 @@ export default function Reel() {
             </div>
 
             <div className="reel__inner" data-aos="fade-up" data-aos-delay="80">
-                {!isVideoReady && (
-                    <div className="reel__placeholder" aria-hidden="true">
-                        <span className="reel__placeholder-label">Loading reel</span>
-                        <span className="reel__placeholder-subtitle">Video starts when you reach this section</span>
-                    </div>
-                )}
-
-                {shouldLoadVideo && (
-                    <video
-                        ref={videoRef}
-                        className={`reel__video ${isVideoReady ? 'reel__video--ready' : ''}`}
-                        autoPlay
-                        loop
-                        muted={isMuted}
-                        playsInline
-                        preload="none"
-                        onCanPlay={() => setIsVideoReady(true)}
-                    >
-                        <source src={reelVideo} type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                )}
+                <video
+                    ref={videoRef}
+                    className="reel__video"
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    preload="metadata"
+                    onPause={() => setIsPlaying(false)}
+                    onPlay={() => setIsPlaying(true)}
+                >
+                    <source src={reelVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
                 
                 <div className="reel__controls" data-aos="fade-up" data-aos-delay="180">
+                    <button className="reel__play-btn" onClick={handlePlayToggle} title={isPlaying ? 'Pause' : 'Play'}>
+                        {isPlaying ? '⏸' : '▶'}
+                    </button>
                     <button className="reel__mute-btn" onClick={handleVolumeToggle} title={isMuted ? 'Unmute' : 'Mute'}>
                         {isMuted ? '🔇' : '🔊'}
                     </button>

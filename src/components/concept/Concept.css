@@ -69,8 +69,6 @@
 	min-width: 0;
 	display: flex;
 	flex-direction: column;
-	content-visibility: auto;
-	contain-intrinsic-size: 520px 760px;
 }
 
 .concept__card-copy {
