@@ -3,7 +3,7 @@ import AOS from 'aos';
 import './Concept.css';
 
 import photoChair from './chair.jpg';
-import photoCoChair from './co-chair.jpeg';
+import photoCoChair from './molka.jpg';
 import photoLogisticsManager from './logistics_manager.jpg';
 import photoLogisticsCoManager from './logistics_co_manager.jpeg';
 import photoSponsoringManager from './sponsoring_manager.png';
@@ -42,8 +42,8 @@ function ConceptTeamThumb({ card, index }) {
 				alt=""
 				className={`concept__thumb-img ${loaded ? 'concept__thumb-img--loaded' : 'concept__thumb-img--loading'}`}
 				decoding="async"
-				loading={index < 4 ? 'eager' : 'lazy'}
-				fetchPriority={index < 2 ? 'high' : 'auto'}
+				loading="eager"
+				fetchPriority={index < 4 ? 'high' : 'auto'}
 				onLoad={() => setLoaded(true)}
 				onError={handleError}
 			/>

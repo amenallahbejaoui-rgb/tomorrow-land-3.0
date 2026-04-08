@@ -47,7 +47,7 @@ export default function Footer() {
 					<nav className="footer__links" aria-label="Footer links">
 						<a href="#about-tommorowland-container">About Tomorrowland</a>
 						<a href="#planning">Planning</a>
-						<a href="#register">Register</a>
+						<a href="#about">Register</a>
 					</nav>
 
 					<div className="footer__line" />

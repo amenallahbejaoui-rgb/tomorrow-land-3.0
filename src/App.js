@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import About from "./components/about/About";
@@ -10,22 +10,9 @@ import AboutTommorowland from "./components/abouttommorowland/abouttommorowland"
 import Ambassadors from "./components/ambassadors/Ambassadors";
 import Planning from "./components/planning/Planning";
 import Speakers from "./components/speakers/Speakers";
-
-const Reel = lazy(() => import("./components/reel/Reel"));
-const Concept = lazy(() => import("./components/concept/Concept"));
-
-function SectionFallback({ minHeight }) {
-  return (
-    <div
-      aria-hidden="true"
-      style={{
-        minHeight,
-        width: "100%",
-        background: "linear-gradient(180deg, #111827 0%, #1a1f3a 100%)",
-      }}
-    />
-  );
-}
+import Reel from "./components/reel/Reel";
+import Concept from "./components/concept/Concept";
+import Register from "./components/register/Register";
 
 export default function App() {
   useEffect(() => {
@@ -54,16 +41,12 @@ export default function App() {
       <Navbar />
       <Home />
       <AboutTommorowland />
-      <Suspense fallback={<SectionFallback minHeight={560} />}>
-        <Reel />
-      </Suspense>
+      <Reel />
       <Ambassadors />
       <Planning />
       <About />
       <Speakers />
-      <Suspense fallback={<SectionFallback minHeight={1500} />}>
-        <Concept />
-      </Suspense>
+      <Concept />
       <OurProgram />
       <Footer />
     </>
