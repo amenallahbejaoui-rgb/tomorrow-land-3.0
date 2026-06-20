@@ -1,6 +1,6 @@
 import React from 'react';
 import './word.css';
-import videoFile from './TomorrowLand-3-0.mov';
+import videoFile from './TomorrowLand-3-0.mp4';
 
 export default function Word() {
   return (
