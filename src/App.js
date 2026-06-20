@@ -12,6 +12,7 @@ import Planning from "./components/planning/Planning";
 import Speakers from "./components/speakers/Speakers";
 import Reel from "./components/reel/Reel";
 import Concept from "./components/concept/Concept";
+import Word from "./components/word/word";
 
 export default function App() {
   useEffect(() => {
@@ -40,6 +41,7 @@ export default function App() {
       <Navbar />
       <Home />
       <AboutTommorowland />
+      <Word />
       <Reel />
       <Ambassadors />
       <Planning />
